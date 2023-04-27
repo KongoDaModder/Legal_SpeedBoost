@@ -1,0 +1,50 @@
+
+using System;
+using System.ComponentModel;
+using BepInEx;
+using BepInEx.Configuration;
+using GorillaLocomotion;
+using Utilla;
+
+namespace SpaceMonke
+{
+	// Token: 0x02000002 RID: 2
+	[Description("HauntedModMenu")]
+	[BepInPlugin("org.legoandmars.gorillatag.speedboost", "Speedboost", "1.2.3")]
+	[BepInDependency("org.legoandmars.gorillatag.utilla", "1.5.0")]
+	[ModdedGamemode]
+	public class SpaceMonke : BaseUnityPlugin
+	{
+		// Token: 0x06000001 RID: 1
+		private void OnEnable()
+		{
+			Player.Instance.maxJumpSpeed = 9999999f;
+		}
+
+		// Token: 0x06000002 RID: 2
+		private void OnDisable()
+		{
+			Player.Instance.maxJumpSpeed = 0f;
+		}
+
+		// Token: 0x06000003 RID: 3
+		[ModdedGamemodeJoin]
+		private void RoomJoined()
+		{
+			SpaceMonke.allowSpeedboost = true;
+		}
+
+		// Token: 0x06000004 RID: 4
+		[ModdedGamemodeLeave]
+		private void RoomLeft()
+		{
+			SpaceMonke.allowSpeedboost = false;
+		}
+
+		// Token: 0x04000002 RID: 2
+		public static ConfigEntry<float> multiplier;
+
+		// Token: 0x04000009 RID: 9
+		public static bool allowSpeedboost;
+	}
+}
